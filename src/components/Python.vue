@@ -31,6 +31,7 @@
     export default {
         data: function () {
             return {
+                // php: "<?php\n\n\n?>",
                 editor: Object,
                 result: "",
                 code: "",
@@ -65,21 +66,14 @@
                 },
                 code: this.code
             }).then((res) => {
-                this.result = res.data
-                console.log(res.data)
+                this.result = res.data.Result
+                console.log(res.data);
             }).catch(err => {
                 if(err.response) {
-                console.log("error")
+                    console.log("error");
                 }
             });
             }
         }
     }
 </script>
-
-
-<style scoped>
-
-
-
-</style>
