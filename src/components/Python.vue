@@ -3,7 +3,7 @@
         <h1>オンラインPython実行環境</h1>
     <form v-on:submit.prevent="execCode">
         <!-- コード入力エリア -->
-        <div ref="editor" style="height: 440px;"></div>
+        <div ref="editor" style="height: 500px;"></div>
         <!-- 出力表示エリア -->
         <div id="output">
             <button type="submit" class="btn-square-so-pop">実行</button>
@@ -42,7 +42,7 @@
             this.editor = ace.edit(this.$refs.editor);
             this.editor.setTheme('ace/theme/monokai');
             this.editor.getSession().setMode('ace/mode/python');
-            this.editor.setFontSize(25);
+            this.editor.setFontSize(18);
             this.editor.getSession().setTabSize(2);
 
             this.editor.$blockScrolling = Infinity;
@@ -59,6 +59,7 @@
         },
         methods: {
             execCode: function() {
+                console.log("クリック")
                 this.code = this.editor.getSession().getValue();
                 axios.post('/api/v1/python',{
                 headers: {

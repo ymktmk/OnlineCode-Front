@@ -30,6 +30,7 @@ h1 {
     padding: 5px;
 }
 .btn-square-so-pop {
+    cursor: pointer;
     position: relative;
     display: inline-block;
     padding: 0.5em 2em;
@@ -41,6 +42,11 @@ h1 {
     font-weight: bold;
     border: solid 2px #d27d00;
 }
+
+.btn-square-so-pop:hover {
+    background-color: #dd8a0e;
+}
+
 html, body, form {
     height: 100%;
 }
