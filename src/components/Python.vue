@@ -1,22 +1,22 @@
 <template>
-    <div class="hello">
+    <div>
         <h1>オンラインPython実行環境</h1>
         <form v-on:submit.prevent="execCode">
-        <!-- コード入力エリア -->
-        <div ref="editor" style="height: 440px;"></div>
-        <!-- 出力表示エリア -->
-        <div id="output">
-            <button type="submit" class="btn-square-so-pop">実行</button>
-        </div>
-
-        <div id="result">
-            <br>
-            <pre id="message" v-bind:class="[ isError ? 'error-message' : 'message' ]">{{ result }}</pre>
-        </div>
+            <!-- コード入力エリア -->
+            <div ref="editor" style="height: 440px;" class="editor"></div>
+            <!-- ローディング -->
+            <div v-show="loading" class="loader"></div>
+            <!-- 出力表示エリア -->
+            <div id="output">
+                <button type="submit" class="btn-square-so-pop" v-bind:disabled="isDisabled">実行</button>
+            </div>
+            <div id="result">
+                <br>
+                <pre id="message" v-bind:class="[ isError ? 'error-message' : 'message' ]">{{ result }}</pre>
+            </div>
         </form>
     </div>
 </template>
-
 
 <script>
     import ace from 'ace-builds'
@@ -30,16 +30,15 @@
     export default {
         data: function () {
             return {
-                // php: "<?php\n\n\n?>",
+                isDisabled: false,
+                loading: false,
                 editor: Object,
                 result: "",
                 code: "",
                 isError: false,
-                // notError: t
             }
         },
         mounted: function() {
-
             this.editor = ace.edit(this.$refs.editor);
             this.editor.setTheme('ace/theme/monokai');
             this.editor.getSession().setMode('ace/mode/python');
@@ -47,17 +46,20 @@
             this.editor.getSession().setTabSize(2);
 
             this.editor.$blockScrolling = Infinity;
-
+            
             this.editor.setOptions({
                 enableBasicAutocompletion: true,
                 enableSnippets: true,
                 enableLiveAutocompletion: true,
                 enableEmmet: true,
             });
-
         },
         methods: {
             execCode: function() {
+                // ローディング終了
+                this.loading = true;
+                this.isDisabled = true;
+                
                 this.code = this.editor.getSession().getValue();
                 axios.post('/api/v1/python',{
                     headers: {
@@ -65,6 +67,10 @@
                     },
                     code: this.code
                 }).then((res) => {
+                    // ローディング終了
+                    this.loading = false;
+                    this.isDisabled = false;
+
                     this.result = res.data.Result;
                     if (res.data.Result.match(/Error/)) {
                         this.isError = true;
@@ -77,15 +83,6 @@
                     }
                 });
             },
-
-            // font
-            fontColor: function(loop) {
-            if (loop === 1) {
-                return this.classRed;
-            } else {
-                return this.classGrey;
-            }
-        }
         }
     }
 </script>
