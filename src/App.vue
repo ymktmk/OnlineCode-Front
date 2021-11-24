@@ -20,15 +20,16 @@ export default {
     margin: 0;
 }
 
-
 body {
     background-color: rgb(38, 40, 34);
 }
+
 h1 {
     color: #ffffff;
     font-family: 'Corben', cursive;
     padding: 5px;
 }
+
 .btn-square-so-pop {
     cursor: pointer;
     position: relative;
@@ -50,12 +51,14 @@ h1 {
 html, body, form {
     height: 100%;
 }
+
 .message {
     color: #ffffff;
     font-size: 20px;
 }
+
 .error-message {
-    color: rgb(248, 3, 2);
+    color: rgb(227, 96, 73);
     font-size: 20px;
 }
 </style>

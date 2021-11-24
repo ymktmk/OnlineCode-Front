@@ -1,9 +1,9 @@
 <template>
     <div class="hello">
         <h1>オンラインPython実行環境</h1>
-    <form v-on:submit.prevent="execCode">
+        <form v-on:submit.prevent="execCode">
         <!-- コード入力エリア -->
-        <div ref="editor" style="height: 500px;"></div>
+        <div ref="editor" style="height: 440px;"></div>
         <!-- 出力表示エリア -->
         <div id="output">
             <button type="submit" class="btn-square-so-pop">実行</button>
@@ -11,10 +11,9 @@
 
         <div id="result">
             <br>
-            <pre id="message" class="message">{{ result }}</pre>
+            <pre id="message" v-bind:class="[ isError ? 'error-message' : 'message' ]">{{ result }}</pre>
         </div>
-
-    </form>
+        </form>
     </div>
 </template>
 
@@ -35,6 +34,8 @@
                 editor: Object,
                 result: "",
                 code: "",
+                isError: false,
+                // notError: t
             }
         },
         mounted: function() {
@@ -54,27 +55,37 @@
                 enableEmmet: true,
             });
 
-            
-        
         },
         methods: {
             execCode: function() {
-                console.log("クリック")
                 this.code = this.editor.getSession().getValue();
                 axios.post('/api/v1/python',{
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                code: this.code
-            }).then((res) => {
-                this.result = res.data.Result
-                console.log(res.data);
-            }).catch(err => {
-                if(err.response) {
-                    console.log("error");
-                }
-            });
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    code: this.code
+                }).then((res) => {
+                    this.result = res.data.Result;
+                    if (res.data.Result.match(/Error/)) {
+                        this.isError = true;
+                    } else {
+                        this.isError = false;
+                    }
+                }).catch(err => {
+                    if(err.response) {
+                        console.log("error");
+                    }
+                });
+            },
+
+            // font
+            fontColor: function(loop) {
+            if (loop === 1) {
+                return this.classRed;
+            } else {
+                return this.classGrey;
             }
+        }
         }
     }
 </script>
