@@ -8,7 +8,7 @@
             <div v-show="loading" class="loader"></div>
             <!-- 出力表示エリア -->
             <div id="output">
-                <button type="submit" class="btn-square-so-pop" v-bind:disabled="isDisabled">実行</button>
+                <button type="submit" class="btn-square-so-pop" v-bind:disabled="loading">実行</button>
             </div>
             <div id="result">
                 <br>
@@ -30,7 +30,6 @@
     export default {
         data: function () {
             return {
-                isDisabled: false,
                 loading: false,
                 editor: Object,
                 result: "",
@@ -58,8 +57,7 @@
             execCode: function() {
                 // ローディング終了
                 this.loading = true;
-                this.isDisabled = true;
-                
+
                 this.code = this.editor.getSession().getValue();
                 axios.post('/api/v1/python',{
                     headers: {
@@ -69,7 +67,6 @@
                 }).then((res) => {
                     // ローディング終了
                     this.loading = false;
-                    this.isDisabled = false;
 
                     this.result = res.data.Result;
                     if (res.data.Result.match(/Error/)) {
