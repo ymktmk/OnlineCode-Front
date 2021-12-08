@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import TopPage from '@/components/TopPage'
 import Python from '@/components/Python'
 import PHP from '@/components/PHP'
+import Javascript from '@/components/Javascript'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ const router = new Router({
         path: '/php',
         name: 'PHP',
         component: PHP
+    },
+    {
+        path: '/javascript',
+        name: 'Javascript',
+        component: Javascript
     },
     ]
 })

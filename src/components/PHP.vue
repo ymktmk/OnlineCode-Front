@@ -8,12 +8,10 @@
         <div id="output">
             <button type="submit" class="btn-square-so-pop">実行</button>
         </div>
-
         <div id="result">
             <br>
             <pre id="message" class="message">{{ result }}</pre>
         </div>
-
     </form>
     </div>
 </template>
