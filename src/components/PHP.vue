@@ -1,20 +1,41 @@
 <template>
-    <div class="hello">
-        <h1>オンラインPHP実行環境</h1>
-    <form v-on:submit.prevent="execCode">
-        <!-- コード入力エリア -->
-        <div ref="editor" style="height: 440px;">{{ php }}</div>
-        <!-- 出力表示エリア -->
-        <div id="output">
-            <button type="submit" class="btn-square-so-pop">実行</button>
-        </div>
+    <div>
 
-        <div id="result">
-            <br>
-            <pre id="message" class="message">{{ result }}</pre>
-        </div>
+        <h2>ブラウザでプログラミング！</h2>
 
-    </form>
+        <ul>
+            <li v-for="item in items" :key="item.name">
+                <a :href="item.url" v-if="!item.children">
+                    {{ item.name }}
+                </a>
+                <span v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">
+                    
+                    <button class="btn-square-so-pop">PHP ▼</button><br>
+
+                    <ul class="dropdown" v-bind:class="{ isOpen }">
+                        <li v-for="child in item.children" :key="child.url">
+                            <a :href="child.url">
+                                {{ child.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </li>
+        </ul>
+
+        <form v-on:submit.prevent="execCode">
+            <!-- コード入力エリア -->
+            <div ref="editor" style="height: 440px;" class="editor">{{ php }}</div>
+            <!-- ローディング -->
+            <div v-show="loading" class="loader"></div>
+            <!-- 出力表示エリア -->
+            <div id="output">
+                <button type="submit" class="btn-square-so-pop" v-bind:disabled="loading">実行</button>
+            </div>
+            <div id="result">
+                <pre id="message" v-bind:class="[ isError ? 'error-message' : 'message' ]">{{ result }}</pre>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -31,23 +52,40 @@
     export default {
         data: function () {
             return {
-                php: "<?php\n\n\n?>",
+                isOpen: false,
+                items: [
+                    {
+                        url: "/",
+                        name: "PHP",
+                        children: [
+                            {
+                                url: '/python',
+                                name: 'Python'
+                            },
+                            {
+                                url: '/php',
+                                name: 'PHP'
+                            },
+                            {
+                                url: '/node',
+                                name: 'Node.js'
+                            },
+                            {
+                                url: '/ruby',
+                                name: 'Ruby'
+                            },
+                        ]
+                    },
+                ],
+                php: "<?php\n\n\n\n?>",
                 editor: Object,
+                loading: false,
                 result: "",
                 code: "",
+                isError: false,
             }
         },
         mounted: function() {
-
-            var message = document.getElementsByTagName('pre')[0].innerHTML;
-            console.log(message);
-
-            if (message.match(/Error/)) {
-                let element = document.getElementById('message');
-                element.className = 'error-message';
-            }
-
-
             this.editor = ace.edit(this.$refs.editor);
             this.editor.setTheme('ace/theme/monokai');
             this.editor.getSession().setMode('ace/mode/php');
@@ -62,24 +100,38 @@
                 enableLiveAutocompletion: true,
                 enableEmmet: true,
             });
-
-            
-        
         },
         methods: {
+            mouseover: function () {
+                this.isOpen = true;
+            },
+            mouseleave: function () {
+                this.isOpen = false;
+            },
             execCode: function() {
+                // ローディング終了
+                this.loading = true;
                 this.code = this.editor.getSession().getValue();
-                axios.post('/api/v1/php',{
+
+                axios.post('http://localhost:10000/api/v1/php',{
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 },
                 code: this.code
             }).then((res) => {
-                this.result = res.data.Result
-                console.log(res.data)
+                // ローディング終了
+                this.loading = false;
+
+                this.result = res.data.Result;
+                if (res.data.Result.match(/Error/)) {
+                    this.isError = true;
+                } else {
+                    this.isError = false;
+                }
             }).catch(err => {
                 if(err.response) {
-                console.log("error")
+                    console.log(err);
                 }
             });
             }
