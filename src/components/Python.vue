@@ -1,6 +1,28 @@
 <template>
     <div>
-        <h1>オンラインPython実行環境</h1>
+
+        <h2>ブラウザでプログラミング！</h2>
+
+        <ul>
+            <li v-for="item in items" :key="item.name">
+                <a :href="item.url" v-if="!item.children">
+                    {{ item.name }}
+                </a>
+                <span v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">
+                    
+                    <button class="btn-square-so-pop">Python ▼</button><br>
+
+                    <ul class="dropdown" v-bind:class="{ isOpen }">
+                        <li v-for="child in item.children" :key="child.url">
+                            <a :href="child.url">
+                                {{ child.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </li>
+        </ul>
+
         <form v-on:submit.prevent="execCode">
             <!-- コード入力エリア -->
             <div ref="editor" style="height: 440px;" class="editor"></div>
@@ -21,7 +43,7 @@
 <script>
     import ace from 'ace-builds'
     import axios from 'axios'
-    
+
     import 'ace-builds/src-noconflict/ext-emmet'
     import 'ace-builds/src-noconflict/ext-language_tools'
     import 'ace-builds/webpack-resolver'
@@ -30,6 +52,27 @@
     export default {
         data: function () {
             return {
+                isOpen: false,
+                items: [
+                    {
+                        url: "/",
+                        name: "Python",
+                        children: [
+                            {
+                                url: '/python',
+                                name: 'Python'
+                            },
+                            {
+                                url: '/php',
+                                name: 'PHP'
+                            },
+                            {
+                                url: '/javascript',
+                                name: 'Javascript'
+                            },
+                        ]
+                    },
+                ],
                 loading: false,
                 editor: Object,
                 result: "",
@@ -54,12 +97,19 @@
             });
         },
         methods: {
+            mouseover: function () {
+                this.isOpen = true;
+            },
+            mouseleave: function () {
+                this.isOpen = false;
+            },
             execCode: function() {
                 // ローディング終了
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
 
-                axios.post('http://52.198.52.213:10000/api/v1/python',{
+                // http://52.198.52.213:10000/api/v1/python
+                axios.post('http://localhost:10000/api/v1/python',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
@@ -75,9 +125,10 @@
                     } else {
                         this.isError = false;
                     }
+
                 }).catch(err => {
                     if(err.response) {
-                        console.log("error");
+                        console.log(err);
                     }
                 });
             },
