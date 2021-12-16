@@ -113,7 +113,7 @@
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
 
-                axios.post('http://localhost:10000/api/v1/php',{
+                axios.post('http://52.198.52.213:10000/api/v1/php',{
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
