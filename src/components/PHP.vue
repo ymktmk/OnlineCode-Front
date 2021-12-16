@@ -10,7 +10,7 @@
                 </a>
                 <span v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">
                     
-                    <button class="btn-square-so-pop">Python ▼</button><br>
+                    <button class="btn-square-so-pop">PHP ▼</button><br>
 
                     <ul class="dropdown" v-bind:class="{ isOpen }">
                         <li v-for="child in item.children" :key="child.url">
@@ -25,14 +25,15 @@
 
         <form v-on:submit.prevent="execCode">
             <!-- コード入力エリア -->
-            <div ref="editor" style="height: 440px;">{{ php }}</div>
+            <div ref="editor" style="height: 440px;" class="editor">{{ php }}</div>
+            <!-- ローディング -->
+            <div v-show="loading" class="loader"></div>
             <!-- 出力表示エリア -->
             <div id="output">
-                <button type="submit" class="btn-square-so-pop">実行</button>
+                <button type="submit" class="btn-square-so-pop" v-bind:disabled="loading">実行</button>
             </div>
             <div id="result">
-                <br>
-                <pre id="message" class="message">{{ result }}</pre>
+                <pre id="message" v-bind:class="[ isError ? 'error-message' : 'message' ]">{{ result }}</pre>
             </div>
         </form>
     </div>
@@ -55,7 +56,7 @@
                 items: [
                     {
                         url: "/",
-                        name: "Python",
+                        name: "PHP",
                         children: [
                             {
                                 url: '/python',
@@ -66,14 +67,19 @@
                                 name: 'PHP'
                             },
                             {
-                                url: '/javascript',
-                                name: 'Javascript'
+                                url: '/node',
+                                name: 'Node.js'
+                            },
+                            {
+                                url: '/ruby',
+                                name: 'Ruby'
                             },
                         ]
                     },
                 ],
-                php: "<?php\n\n\n?>",
+                php: "<?php\n\n\n\n?>",
                 editor: Object,
+                loading: false,
                 result: "",
                 code: "",
                 isError: false,
@@ -107,7 +113,7 @@
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
 
-                axios.post('http://localhost:10000/api/v1/python',{
+                axios.post('http://localhost:10000/api/v1/php',{
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'

@@ -93,11 +93,11 @@ ul > li > span > button {
     display: none;
     /* padding: 0; */
     list-style-type: none;
-    background-color: #007db9;
+    background-color: #dd8a0e;
 }
 
 .dropdown li {
-    width: 250px;
+    width: 150px;
     border-bottom: 1px solid #fff;
 }
 
@@ -112,11 +112,6 @@ ul > li > span > button {
     display: block;
 }
 
-
-
-
-
-
 /* エディタ */
 
 .editor {
@@ -124,7 +119,7 @@ ul > li > span > button {
 }
 
 .loader {
-    top: 30%;
+    top: 40%;
     left: 20%;
     z-index: 1;
     margin: 0 auto;
