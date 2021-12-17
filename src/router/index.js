@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import TopPage from '@/components/TopPage'
 import Python from '@/components/Python'
 import Node from '@/components/Node'
-import Php from '@/components/Php'
 import Ruby from '@/components/Ruby'
 import Go from '@/components/Golang'
 import Dart from '@/components/Dart'
@@ -22,11 +21,6 @@ const router = new Router({
         path: '/python',
         name: 'Python',
         component: Python
-    },
-    {
-        path: '/php',
-        name: 'Php',
-        component: Php
     },
     {
         path: '/node',

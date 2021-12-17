@@ -4,10 +4,10 @@ phases:
     pre_build:
         commands:
             - if [ -e /tmp/node_modules.tar ]; then tar xf /tmp/node_modules.tar; fi
-            - yarn install
+            - npm install
     build:
         commands:
-            - yarn build
+            - npm build
     post_build:
         commands:
             - tar cf /tmp/node_modules.tar node_modules
