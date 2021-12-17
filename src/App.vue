@@ -71,18 +71,13 @@ html, body, form {
 /* ドロップダウン */
 
 ul > li > span {
-    padding-bottom: 30px;
+    margin-bottom: 30px;
     position: relative;
     display: block;
     height: auto;
     color: #fff;
     text-decoration: none;
     cursor: pointer;
-}
-
-ul > li > span > button {
-    padding: 30px;
-    /* font-size: 20px; */
 }
 
 .dropdown {

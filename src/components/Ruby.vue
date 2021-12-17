@@ -8,7 +8,7 @@
                 <a :href="item.url" v-if="!item.children">
                     {{ item.name }}
                 </a>
-                <span v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">
+                <span v-on:click="open">
                     
                     <button class="btn-square-so-pop">Ruby ▼</button><br>
 
@@ -101,11 +101,8 @@
             });
         },
         methods: {
-            mouseover: function () {
-                this.isOpen = true;
-            },
-            mouseleave: function () {
-                this.isOpen = false;
+            open: function () {
+                this.isOpen = !this.isOpen;
             },
             execCode: function() {
                 // ローディング終了
