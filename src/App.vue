@@ -71,7 +71,7 @@ html, body, form {
 /* ドロップダウン */
 
 ul > li > span {
-    width: 120px;
+    width: 130px;
     margin-bottom: 30px;
     position: relative;
     display: block;
