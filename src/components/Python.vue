@@ -8,7 +8,7 @@
                 <a :href="item.url" v-if="!item.children">
                     {{ item.name }}
                 </a>
-                <span v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">
+                <span v-on:click="open">
                     
                     <button class="btn-square-so-pop">Python ▼</button><br>
 
@@ -101,11 +101,8 @@
             });
         },
         methods: {
-            mouseover: function () {
-                this.isOpen = true;
-            },
-            mouseleave: function () {
-                this.isOpen = false;
+            open: function () {
+                this.isOpen = !this.isOpen;
             },
             execCode: function() {
                 // ローディング終了
@@ -113,7 +110,7 @@
                 this.code = this.editor.getSession().getValue();
 
                 // http://52.198.52.213:10000/api/v1/python
-                axios.post('http://52.198.52.213:10000/api/v1/python',{
+                axios.post('http://localhost:10000/api/v1/python',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
