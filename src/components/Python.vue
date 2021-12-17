@@ -108,9 +108,8 @@
                 // ローディング終了
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
-
-                // http://52.198.52.213:10000/api/v1/python
-                axios.post('http://localhost:10000/api/v1/python',{
+                
+                axios.post('http://52.198.52.213:10000/api/v1/python',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
