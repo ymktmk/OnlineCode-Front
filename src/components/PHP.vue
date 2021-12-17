@@ -39,7 +39,6 @@
     </div>
 </template>
 
-
 <script>
     import ace from 'ace-builds'
     import axios from 'axios'
