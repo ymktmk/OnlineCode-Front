@@ -1,19 +1,15 @@
 <template>
     <div>
-
-        <dropdown-menu v-model="show" :right="right" :hover="hover" :interactive="interactive"> 
-            <button class="btn btn-primary dropdown-toggle">Click to open dropdown</button>
-            <div slot="dropdown">
-                <a class="dropdown-item" href="/python">Python</a>
-                <a class="dropdown-item" href="/php">PHP</a>
-                <a class="dropdown-item" href="/javascript">Javascript</a>
-            </div>
-        </dropdown-menu>
-
-        <h1>オンライン実行環境</h1>
-        <h1>Python・Ruby・PHP・Go・Dart・Javascript</h1>
-        <h1>ブラウザ上で実行できるサービス</h1>
-    
+        <div class="title">
+            <h2>環境構築なしでブラウザでプログラムを実行できる</h2>
+            <h2 class="language">
+                <span><a href="/python">Python</a>・</span>
+                <!-- <span><a href="/php">PHP</a>・</span> -->
+                <span><a href="/ruby">Ruby</a>・</span>
+                <span><a href="/node">Node.js</a></span>
+            </h2>
+            <br>
+        </div>
     </div>
 </template>
 
@@ -21,16 +17,52 @@
     export default {
         data: function () {
             return {
-                show: false,
-                right: false,
-                hover: false,
-                interactive: false
+                isOpen: false,
+                items: [
+                    {
+                        url: "/",
+                        name: "Python",
+                        children: [
+                            {
+                                url: '/python',
+                                name: 'Python'
+                            },
+                            {
+                                url: '/php',
+                                name: 'PHP'
+                            },
+                            {
+                                url: '/node',
+                                name: 'Node.js'
+                            },
+                            {
+                                url: '/ruby',
+                                name: 'Ruby'
+                            },
+                        ]
+                    },
+                ],
             }
         },
         mounted: function() {
         },
         methods: {
-
+            open: function () {
+                this.isOpen = !this.isOpen;
+            },
         }
     }
 </script>
+
+<style>
+
+.title {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.language span a {
+    color: honeydew;
+}
+
+</style>
