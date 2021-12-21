@@ -109,7 +109,7 @@
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
                 
-                axios.post('http://52.198.52.213:10000/api/v1/python',{
+                axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/python/',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
