@@ -118,8 +118,7 @@
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
 
-                // https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/ruby
-                axios.post('http://localhost:10000/api/v1/ruby',{
+                axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/ruby',{
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
