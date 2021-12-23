@@ -8,7 +8,7 @@
                 <a :href="item.url" v-if="!item.children">
                     {{ item.name }}
                 </a>
-                <span v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">
+                <span v-on:click="open">
                     
                     <button class="btn-square-so-pop">Dart ▼</button><br>
 
@@ -63,16 +63,16 @@
                                 name: 'Python'
                             },
                             {
-                                url: '/php',
-                                name: 'PHP'
-                            },
-                            {
                                 url: '/node',
                                 name: 'Node.js'
                             },
                             {
                                 url: '/ruby',
                                 name: 'Ruby'
+                            },
+                            {
+                                url: '/dart',
+                                name: 'Dart'
                             },
                         ]
                     },
@@ -84,6 +84,12 @@
                 code: "",
                 isError: false,
             }
+        },
+        created () {
+            window.addEventListener("beforeunload", this.confirmSave);
+        },
+        destroyed () {
+            window.removeEventListener("beforeunload", this.confirmSave);
         },
         mounted: function() {
             this.editor = ace.edit(this.$refs.editor);
@@ -102,18 +108,18 @@
             });
         },
         methods: {
-            mouseover: function () {
-                this.isOpen = true;
+            confirmSave (event) {
+                event.returnValue = "編集中のものは保存されませんが、よろしいですか？";
             },
-            mouseleave: function () {
-                this.isOpen = false;
+            open: function () {
+                this.isOpen = !this.isOpen;
             },
             execCode: function() {
                 // ローディング終了
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
 
-                axios.post('http://localhost:10000/api/v1/dart',{
+                axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/dart',{
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -123,8 +129,8 @@
                 // ローディング終了
                 this.loading = false;
 
-                this.result = res.data.Result;
-                if (res.data.Result.match(/Error/)) {
+                this.result = res.data.result;
+                if (res.data.result.match(/Error/)) {
                     this.isError = true;
                 } else {
                     this.isError = false;
