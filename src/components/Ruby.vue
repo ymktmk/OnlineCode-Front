@@ -62,10 +62,6 @@
                                 url: '/python',
                                 name: 'Python'
                             },
-                            // {
-                            //     url: '/php',
-                            //     name: 'PHP'
-                            // },
                             {
                                 url: '/node',
                                 name: 'Node.js'
@@ -73,6 +69,10 @@
                             {
                                 url: '/ruby',
                                 name: 'Ruby'
+                            },
+                            {
+                                url: '/dart',
+                                name: 'Dart'
                             },
                         ]
                     },
@@ -83,6 +83,12 @@
                 code: "",
                 isError: false,
             }
+        },
+        created () {
+            window.addEventListener("beforeunload", this.confirmSave);
+        },
+        destroyed () {
+            window.removeEventListener("beforeunload", this.confirmSave);
         },
         mounted: function() {
             this.editor = ace.edit(this.$refs.editor);
@@ -101,6 +107,9 @@
             });
         },
         methods: {
+            confirmSave (event) {
+                event.returnValue = "編集中のものは保存されませんが、よろしいですか？";
+            },
             open: function () {
                 this.isOpen = !this.isOpen;
             },
@@ -119,8 +128,8 @@
                 // ローディング終了
                 this.loading = false;
 
-                this.result = res.data.Result;
-                if (res.data.Result.match(/Error/)) {
+                this.result = res.data.result;
+                if (res.data.result.match(/Error/)) {
                     this.isError = true;
                 } else {
                     this.isError = false;
