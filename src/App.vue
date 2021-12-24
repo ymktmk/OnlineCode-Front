@@ -112,7 +112,9 @@ ul > li > span {
 
 .editor {
     position: relative;
+    height: 75vh;
 }
+
 
 .loader {
     top: 40%;
