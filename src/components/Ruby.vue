@@ -1,8 +1,5 @@
 <template>
     <div>
-
-        <h2>ブラウザでプログラミング！</h2>
-
         <ul>
             <li v-for="item in items" :key="item.name">
                 <a :href="item.url" v-if="!item.children">

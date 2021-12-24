@@ -72,7 +72,7 @@ html, body, form {
 
 ul > li > span {
     width: 130px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     position: relative;
     display: block;
     height: auto;
