@@ -22,7 +22,7 @@
 
         <form v-on:submit.prevent="execCode">
             <!-- コード入力エリア -->
-            <div ref="editor" style="height: 440px;" class="editor">{{ dart }}</div>
+            <div ref="editor" class="editor">{{ dart }}</div>
             <!-- ローディング -->
             <div v-show="loading" class="loader"></div>
             <!-- 出力表示エリア -->
