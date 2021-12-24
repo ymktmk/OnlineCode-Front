@@ -6,7 +6,8 @@
                 <span><a href="/python">Python</a>・</span>
                 <!-- <span><a href="/php">PHP</a>・</span> -->
                 <span><a href="/ruby">Ruby</a>・</span>
-                <span><a href="/node">Node.js</a></span>
+                <span><a href="/node">Node.js</a>・</span>
+                <span><a href="/dart">Dart</a></span>
             </h2>
             <br>
         </div>
