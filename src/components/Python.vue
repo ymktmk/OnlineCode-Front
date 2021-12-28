@@ -6,7 +6,9 @@
                     {{ item.name }}
                 </a>
                 <span v-on:click="open">
+                    
                     <button class="btn-square-so-pop">Python ▼</button><br>
+
                     <ul class="dropdown" v-bind:class="{ isOpen }">
                         <li v-for="child in item.children" :key="child.url">
                             <a :href="child.url">
@@ -15,11 +17,6 @@
                         </li>
                     </ul>
                 </span>
-            </li>
-            <!-- URL発行 -->
-            <li>
-                <button @click="createUrl" class="btn-square-so-pop">mob programming</button>
-                <a v-show="url" :href="url">クリックで遷移</a>
             </li>
         </ul>
 
@@ -48,9 +45,6 @@
     import 'ace-builds/src-noconflict/ext-language_tools'
     import 'ace-builds/webpack-resolver'
     import 'ace-builds/src-noconflict/mode-python'
-
-    import firebase from 'firebase/app'
-    import 'firebase/firestore'
     
     export default {
         data: function () {
@@ -85,12 +79,9 @@
                 result: "",
                 code: "",
                 isError: false,
-                db: null,
-                url: "",
             }
         },
         created () {
-            this.db = firebase.firestore();
             window.addEventListener("beforeunload", this.confirmSave);
         },
         destroyed () {
@@ -113,17 +104,6 @@
             });
         },
         methods: {
-            createUrl: function() {
-                this.db.collection("live").add({
-                    "loading": false,
-                    "code": "",
-                    "result": "",
-                }).then((docRef) => {
-                    this.url = "python/" + docRef.id;
-                }).catch((error) => {
-                    console.error("Error adding document: ", error);
-                });
-            },
             confirmSave (event) {
                 event.returnValue = "編集中のものは保存されませんが、よろしいですか？";
             },
@@ -134,6 +114,7 @@
                 // ローディング終了
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
+                
                 axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/python',{
                     headers: {
                         'Content-Type': 'application/json',
@@ -143,6 +124,7 @@
                 }).then((res) => {
                     // ローディング終了
                     this.loading = false;
+
                     this.result = res.data.result;
                     if (res.data.result.match(/Error/)) {
                         this.isError = true;
@@ -158,11 +140,3 @@
         }
     }
 </script>
-
-<style>
-
-a {
-    color: blanchedalmond;
-}
-
-</style>
