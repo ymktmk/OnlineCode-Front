@@ -111,31 +111,31 @@
                 this.isOpen = !this.isOpen;
             },
             execCode: function() {
-                // ローディング終了
-                this.loading = true;
-                this.code = this.editor.getSession().getValue();
+                    // ローディング終了
+                    this.loading = true;
+                    this.code = this.editor.getSession().getValue();
 
-                axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/node',{
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                code: this.code
-            }).then((res) => {
-                // ローディング終了
-                this.loading = false;
+                    axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/node',{
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    code: this.code
+                }).then((res) => {
+                    // ローディング終了
+                    this.loading = false;
 
-                this.result = res.data.result;
-                if (res.data.result.match(/Error/)) {
-                    this.isError = true;
-                } else {
-                    this.isError = false;
-                }
-            }).catch(err => {
-                if(err.response) {
-                    console.log(err);
-                }
-            });
+                    this.result = res.data.result;
+                    if (res.data.result.match(/Error/)) {
+                        this.isError = true;
+                    } else {
+                        this.isError = false;
+                    }
+                }).catch(err => {
+                    if(err.response) {
+                        console.log(err);
+                    }
+                });
             }
         }
     }
