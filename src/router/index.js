@@ -3,9 +3,7 @@ import Router from 'vue-router'
 import TopPage from '@/components/TopPage'
 import Python from '@/components/python/Python'
 import Python_id from '@/components/python/_id'
-
 import Php from '@/components/php/Php'
-
 import Node from '@/components/Node'
 import Ruby from '@/components/Ruby'
 import Go from '@/components/Golang'

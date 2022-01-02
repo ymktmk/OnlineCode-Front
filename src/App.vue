@@ -30,11 +30,6 @@ h2 {
     padding: 5px;
 }
 
-h4 {
-    color: #ffffff;
-    padding: 5px;
-}
-
 .btn-square-so-pop {
     cursor: pointer;
     position: relative;
@@ -74,18 +69,6 @@ html, body, form {
 }
 
 /* ドロップダウン */
-
-a {
-    padding: 5px;
-}
-
-/* ul {
-    overflow: hidden;
-}
-
-li {
-    float: left;
-} */
 
 ul > li > span {
     width: 130px;
@@ -131,6 +114,7 @@ ul > li > span {
     position: relative;
     height: 75vh;
 }
+
 
 .loader {
     top: 40%;
