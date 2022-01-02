@@ -55,22 +55,11 @@
                         url: "/",
                         name: "Ruby",
                         children: [
-                            {
-                                url: '/python',
-                                name: 'Python'
-                            },
-                            {
-                                url: '/node',
-                                name: 'Node.js'
-                            },
-                            {
-                                url: '/ruby',
-                                name: 'Ruby'
-                            },
-                            {
-                                url: '/dart',
-                                name: 'Dart'
-                            },
+                            { url: '/python', name: 'Python' },
+                            { url: '/php', name: 'PHP' },
+                            { url: '/node', name: 'Node.js' },
+                            { url: '/ruby', name: 'Ruby' },
+                            { url: '/dart', name: 'Dart' },
                         ]
                     },
                 ],
@@ -93,6 +82,7 @@
             this.editor.getSession().setMode('ace/mode/ruby');
             this.editor.setFontSize(20);
             this.editor.getSession().setTabSize(2);
+            this.editor.setHighlightActiveLine(false);
 
             this.editor.$blockScrolling = Infinity;
 
@@ -114,7 +104,6 @@
                     // ローディング終了
                     this.loading = true;
                     this.code = this.editor.getSession().getValue();
-
                     axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/ruby',{
                     headers: {
                         'Content-Type': 'application/json',
@@ -124,7 +113,6 @@
                 }).then((res) => {
                     // ローディング終了
                     this.loading = false;
-
                     this.result = res.data.result;
                     if (res.data.result.match(/Error/)) {
                         this.isError = true;

@@ -23,7 +23,7 @@
 
         <form v-on:submit.prevent="execCode">
             <!-- コード入力エリア -->
-            <div ref="editor" class="editor" @mousemove="mouseleave"></div>
+            <div ref="editor" class="editor"></div>
             <!-- ローディング -->
             <div v-show="loading" class="loader"></div>
             <!-- 出力表示エリア -->
@@ -94,6 +94,7 @@ export default {
         this.editor.getSession().setMode('ace/mode/python');
         this.editor.setFontSize(18);
         this.editor.getSession().setTabSize(2);
+        this.editor.setHighlightActiveLine(false);
 
         this.editor.$blockScrolling = Infinity;
         
@@ -102,14 +103,22 @@ export default {
             enableSnippets: true,
             enableLiveAutocompletion: true,
             enableEmmet: true,
-        });  
+        });
+
+        this.editor.getSession().on('change', function() {
+            // 定期的に更新する
+            console.log("change");
+        });
+
     },
     created: function() {
         this.id = this.$route.params["id"];
         this.db = firebase.firestore();
-        // 結果を取得する
+        // 結果が更新された時
         this.db.collection("live").doc(this.id).onSnapshot((doc) => {
-            this.editor.setValue(doc.data()["code"]);
+            this.editor.setValue(doc.data()["code"], 1);
+            // 自分が書き込んだ位置に戻る
+            this.editor.moveCursorTo(doc.data()["column"] , doc.data()["row"]);
             this.loading = doc.data()["loading"];
             this.result = doc.data()["result"];
             // Errorは赤にする
@@ -121,13 +130,13 @@ export default {
         });
     },
     methods: {
-        mouseleave: function() {
-            // カーソルの位置
-            // this.editor.getCursorPosition()
+        // 入力時
+        change: function() {
             this.db.collection("live").doc(this.id).update({
+                "row": this.editor.getCursorPosition().column,
+                "column": this.editor.getCursorPosition().row,
                 "code": this.editor.getSession().getValue()
             });
-            // this.editor.moveCursorTo(0,0);
         },
         execCode: function() {
             // loading開始
@@ -142,7 +151,6 @@ export default {
                 },
                 code: this.code
             }).then((res) => {
-                // レスポンスが帰ってきたらfirestoreに挿入する
                 this.db.collection("live").doc(this.id).update({
                     "loading": false,                    
                     "result": res.data.result
