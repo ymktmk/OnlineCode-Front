@@ -6,7 +6,7 @@
                     {{ item.name }}
                 </a>
                 <span v-on:click="open">
-                    <button class="btn-square-so-pop">Dart ▼</button><br>
+                    <button class="btn-square-so-pop">PHP ▼</button><br>
                     <ul class="dropdown" v-bind:class="{ isOpen }">
                         <li v-for="child in item.children" :key="child.url">
                             <a :href="child.url">
@@ -19,8 +19,11 @@
         </ul>
 
         <form v-on:submit.prevent="execCode">
-            <div ref="editor" class="editor">{{ dart }}</div>
+            <!-- コード入力エリア -->
+            <div ref="editor" class="editor">{{ php }}</div>
+            <!-- ローディング -->
             <div v-show="loading" class="loader"></div>
+            <!-- 出力表示エリア -->
             <div id="output">
                 <button type="submit" class="btn-square-so-pop" v-bind:disabled="loading">実行</button>
             </div>
@@ -39,7 +42,7 @@
     import 'ace-builds/src-noconflict/ext-emmet'
     import 'ace-builds/src-noconflict/ext-language_tools'
     import 'ace-builds/webpack-resolver'
-    import 'ace-builds/src-noconflict/mode-dart'
+    import 'ace-builds/src-noconflict/mode-php'
     
     export default {
         data: function () {
@@ -58,7 +61,7 @@
                         ]
                     },
                 ],
-                dart: "void main() {\n\n\n\n}",
+                php: "<?php\n\n\n\n?>",
                 editor: Object,
                 loading: false,
                 result: "",
@@ -75,7 +78,7 @@
         mounted: function() {
             this.editor = ace.edit(this.$refs.editor);
             this.editor.setTheme('ace/theme/monokai');
-            this.editor.getSession().setMode('ace/mode/dart');
+            this.editor.getSession().setMode('ace/mode/php');
             this.editor.setFontSize(20);
             this.editor.getSession().setTabSize(2);
             this.editor.setHighlightActiveLine(false);
@@ -99,7 +102,7 @@
             execCode: function() {
                     this.loading = true;
                     this.code = this.editor.getSession().getValue();
-                    axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/dart',{
+                    axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/php',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'

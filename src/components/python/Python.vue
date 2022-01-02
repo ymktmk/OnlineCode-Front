@@ -18,6 +18,11 @@
                     </ul>
                 </span>
             </li>
+            <!-- 現在開発中 -->
+            <!-- <li>
+                <button @click="createUrl" class="btn-square-so-pop">mob programming</button>
+                <a v-show="url" :href="url">クリックで遷移</a>
+            </li> -->
         </ul>
 
         <form v-on:submit.prevent="execCode">
@@ -55,22 +60,11 @@
                         url: "/",
                         name: "Python",
                         children: [
-                            {
-                                url: '/python',
-                                name: 'Python'
-                            },
-                            {
-                                url: '/node',
-                                name: 'Node.js'
-                            },
-                            {
-                                url: '/ruby',
-                                name: 'Ruby'
-                            },
-                            {
-                                url: '/dart',
-                                name: 'Dart'
-                            },
+                            { url: '/python', name: 'Python' },
+                            { url: '/php', name: 'PHP' },
+                            { url: '/node', name: 'Node.js' },
+                            { url: '/ruby', name: 'Ruby' },
+                            { url: '/dart', name: 'Dart' },
                         ]
                     },
                 ],
@@ -93,6 +87,7 @@
             this.editor.getSession().setMode('ace/mode/python');
             this.editor.setFontSize(18);
             this.editor.getSession().setTabSize(2);
+            this.editor.setHighlightActiveLine(false);
 
             this.editor.$blockScrolling = Infinity;
             
