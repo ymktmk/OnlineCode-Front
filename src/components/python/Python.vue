@@ -6,7 +6,9 @@
                     {{ item.name }}
                 </a>
                 <span v-on:click="open">
-                    <button class="btn-square-so-pop">Dart ▼</button><br>
+                    
+                    <button class="btn-square-so-pop">Python ▼</button><br>
+
                     <ul class="dropdown" v-bind:class="{ isOpen }">
                         <li v-for="child in item.children" :key="child.url">
                             <a :href="child.url">
@@ -16,30 +18,38 @@
                     </ul>
                 </span>
             </li>
+            <!-- 現在開発中 -->
+            <!-- <li>
+                <button @click="createUrl" class="btn-square-so-pop">mob programming</button>
+                <a v-show="url" :href="url">クリックで遷移</a>
+            </li> -->
         </ul>
 
         <form v-on:submit.prevent="execCode">
-            <div ref="editor" class="editor">{{ dart }}</div>
+            <!-- コード入力エリア -->
+            <div ref="editor" class="editor"></div>
+            <!-- ローディング -->
             <div v-show="loading" class="loader"></div>
+            <!-- 出力表示エリア -->
             <div id="output">
                 <button type="submit" class="btn-square-so-pop" v-bind:disabled="loading">実行</button>
             </div>
             <div id="result">
+                <br>
                 <pre id="message" v-bind:class="[ isError ? 'error-message' : 'message' ]">{{ result }}</pre>
             </div>
         </form>
     </div>
 </template>
 
-
 <script>
     import ace from 'ace-builds'
     import axios from 'axios'
-    
+
     import 'ace-builds/src-noconflict/ext-emmet'
     import 'ace-builds/src-noconflict/ext-language_tools'
     import 'ace-builds/webpack-resolver'
-    import 'ace-builds/src-noconflict/mode-dart'
+    import 'ace-builds/src-noconflict/mode-python'
     
     export default {
         data: function () {
@@ -48,7 +58,7 @@
                 items: [
                     {
                         url: "/",
-                        name: "PHP",
+                        name: "Python",
                         children: [
                             { url: '/python', name: 'Python' },
                             { url: '/php', name: 'PHP' },
@@ -58,9 +68,8 @@
                         ]
                     },
                 ],
-                dart: "void main() {\n\n\n\n}",
-                editor: Object,
                 loading: false,
+                editor: Object,
                 result: "",
                 code: "",
                 isError: false,
@@ -75,7 +84,7 @@
         mounted: function() {
             this.editor = ace.edit(this.$refs.editor);
             this.editor.setTheme('ace/theme/monokai');
-            this.editor.getSession().setMode('ace/mode/dart');
+            this.editor.getSession().setMode('ace/mode/python');
             this.editor.setFontSize(18);
             this.editor.getSession().setTabSize(2);
             this.editor.setHighlightActiveLine(false);
@@ -95,9 +104,9 @@
                 this.isOpen = !this.isOpen;
             },
             execCode: function() {
-                    this.loading = true;
-                    this.code = this.editor.getSession().getValue();
-                    axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/dart',{
+                this.loading = true;
+                this.code = this.editor.getSession().getValue();
+                axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/python',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
@@ -116,7 +125,7 @@
                         console.log(err);
                     }
                 });
-            }
+            },
         }
     }
 </script>

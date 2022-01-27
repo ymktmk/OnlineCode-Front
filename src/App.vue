@@ -23,8 +23,9 @@ body {
     background-color: rgb(38, 40, 34);
 }
 
-h1 {
+h2 {
     color: #ffffff;
+    font-size: 30px;
     font-family: 'Corben', cursive;
     padding: 5px;
 }
@@ -67,14 +68,77 @@ html, body, form {
     font-size: 20px;
 }
 
-/* -------------------------------------------- */
+/* ドロップダウン */
 
-.editor {
+ul > li > span {
+    width: 130px;
+    margin-bottom: 10px;
     position: relative;
+    display: block;
+    height: auto;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
 }
 
+.dropdown {
+    z-index: 5;
+    position: absolute;
+    /* top: 100%; */
+    left: 0;
+    display: none;
+    /* padding: 0; */
+    list-style-type: none;
+    background-color: #dd8a0e;
+}
+
+.dropdown li {
+    width: 150px;
+    border-bottom: 1px solid #fff;
+}
+
+.dropdown li a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.isOpen {
+    display: block;
+}
+
+/* エディタ */
+.editor {
+    position: relative;
+    height: 75vh;
+}
+
+/* number */
+.ace_gutter-cell {
+    color: #8F908A;
+}
+
+/* cursor background */
+.ace_gutter-active-line {
+    background-color: #272727 !important;
+}
+
+.ace_gutter {
+    background-color: #272822 !important;
+}
+.ace_scroller {
+    background-color: #272822 !important;
+}
+
+/* cursor color */
+.ace-tm .ace_cursor {
+    color: #ffffff;
+}
+
+/* loading */
 .loader {
-    top: 30%;
+    top: 40%;
     left: 20%;
     z-index: 1;
     margin: 0 auto;
