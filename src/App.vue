@@ -109,13 +109,34 @@ ul > li > span {
 }
 
 /* エディタ */
-
 .editor {
     position: relative;
     height: 75vh;
 }
 
+/* number */
+.ace_gutter-cell {
+    color: #8F908A;
+}
 
+/* cursor background */
+.ace_gutter-active-line {
+    background-color: #272727 !important;
+}
+
+.ace_gutter {
+    background-color: #272822 !important;
+}
+.ace_scroller {
+    background-color: #272822 !important;
+}
+
+/* cursor color */
+.ace-tm .ace_cursor {
+    color: #ffffff;
+}
+
+/* loading */
 .loader {
     top: 40%;
     left: 20%;

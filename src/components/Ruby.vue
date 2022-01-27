@@ -80,12 +80,10 @@
             this.editor = ace.edit(this.$refs.editor);
             this.editor.setTheme('ace/theme/monokai');
             this.editor.getSession().setMode('ace/mode/ruby');
-            this.editor.setFontSize(20);
+            this.editor.setFontSize(18);
             this.editor.getSession().setTabSize(2);
             this.editor.setHighlightActiveLine(false);
-
             this.editor.$blockScrolling = Infinity;
-
             this.editor.setOptions({
                 enableBasicAutocompletion: true,
                 enableSnippets: true,

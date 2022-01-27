@@ -88,9 +88,7 @@
             this.editor.setFontSize(18);
             this.editor.getSession().setTabSize(2);
             this.editor.setHighlightActiveLine(false);
-
             this.editor.$blockScrolling = Infinity;
-            
             this.editor.setOptions({
                 enableBasicAutocompletion: true,
                 enableSnippets: true,
@@ -106,10 +104,8 @@
                 this.isOpen = !this.isOpen;
             },
             execCode: function() {
-                // ローディング終了
                 this.loading = true;
                 this.code = this.editor.getSession().getValue();
-                
                 axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/python',{
                     headers: {
                         'Content-Type': 'application/json',
@@ -117,9 +113,7 @@
                     },
                     code: this.code
                 }).then((res) => {
-                    // ローディング終了
                     this.loading = false;
-
                     this.result = res.data.result;
                     if (res.data.result.match(/Error/)) {
                         this.isError = true;
