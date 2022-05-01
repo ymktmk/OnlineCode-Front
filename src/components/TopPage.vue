@@ -4,7 +4,7 @@
             <h2>環境構築なしでブラウザでプログラムを実行できる</h2>
             <h2 class="language">
                 <span><a href="/python">Python</a>・</span>
-                <!-- <span><a href="/php">PHP</a>・</span> -->
+                <span><a href="/php">PHP</a>・</span>
                 <span><a href="/ruby">Ruby</a>・</span>
                 <span><a href="/node">Node.js</a>・</span>
                 <span><a href="/dart">Dart</a></span>
