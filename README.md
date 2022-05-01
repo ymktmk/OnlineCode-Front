@@ -1,5 +1,15 @@
 # オンライン実行環境のフロントエンドです。
 
+## 環境構築
+
+```
+yarn install
+```
+
+```
+yarn serve
+```
+
 ## アプリのURL
 
 https://www.code-run.ga
