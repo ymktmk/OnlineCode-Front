@@ -101,7 +101,7 @@
             execCode: function() {
                     this.loading = true;
                     this.code = this.editor.getSession().getValue();
-                    axios.post('https://3ldxo49n3a.execute-api.ap-northeast-1.amazonaws.com/api/ruby',{
+                    axios.post('https://api.code-run.ga/api/v1/ruby',{
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
