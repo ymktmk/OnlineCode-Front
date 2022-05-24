@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="title">
-            <h2>環境構築なしでブラウザでプログラムを実行できる</h2>
+            <h2>環境構築なしでブラウザでプログラムを実行できます</h2>
             <h2 class="language">
                 <span><a href="/python">Python</a>・</span>
                 <span><a href="/php">PHP</a>・</span>
